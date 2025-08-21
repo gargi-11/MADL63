@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
+import 'package:flutter/scheduler.dart';
 
 import 'package:flutter/material.dart';
 
@@ -437,7 +438,13 @@ class _GamePainter extends CustomPainter {
 
     // Particles
     for (final s in particles) {
-      final col = HSVColor.fromAHSV(max(s.life, 0).clamp(0.0, 1.0), (s.hue * 360) % 360, 0.8, 1.0).toColor();
+      final col = HSVColor.fromAHSV(
+  max(s.life, 0).clamp(0.0, 1.0).toDouble(),
+  (s.hue * 360) % 360,
+  0.8,
+  1.0,
+).toColor();
+
       canvas.drawCircle(Offset(px(s.x), py(s.y)), px(0.007), Paint()
         ..color = col
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6));
